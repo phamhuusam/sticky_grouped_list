@@ -357,17 +357,21 @@ class StickyGroupedListViewState<T, E>
   }
 
   Widget _showFixedGroupHeader(int index) {
-    if (widget.elements.isNotEmpty) {
-      _groupHeaderKey = GlobalKey();
-      return Container(
-        key: _groupHeaderKey,
-        color:
-            widget.floatingHeader ? null : widget.stickyHeaderBackgroundColor,
-        width: widget.floatingHeader ? null : MediaQuery.of(context).size.width,
-        child: widget.groupSeparatorBuilder(sortedElements[index]),
-      );
+    try {
+      if (widget.elements.isNotEmpty) {
+        _groupHeaderKey = GlobalKey();
+        return Container(
+          key: _groupHeaderKey,
+          color:
+              widget.floatingHeader ? null : widget.stickyHeaderBackgroundColor,
+          width: widget.floatingHeader ? null : MediaQuery.of(context).size.width,
+          child: widget.groupSeparatorBuilder(sortedElements[index]),
+        );
+      }
+      return Container();
+    } catch(e) {
+      return Container();
     }
-    return Container();
   }
 
   /// The purpose of this method is to wrap [widget.elementIdentifier] and
